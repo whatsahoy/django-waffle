@@ -161,7 +161,11 @@ class WaffleTests(TestCase):
         assert 'dwf_myflag' not in response.cookies
 
         request.user = User(username='foo')
-        assert request.user.is_authenticated()
+        is_authenticated = request.user.is_authenticated
+        if callable(is_authenticated):
+            # Django < 1.10 had is_authenticated as method
+            is_authenticated = is_authenticated()
+        assert is_authenticated
         response = process_request(request, views.flag_in_view)
         self.assertEqual(b'on', response.content)
         assert 'dwf_myflag' not in response.cookies
@@ -177,7 +181,11 @@ class WaffleTests(TestCase):
         assert 'dwf_myflag' not in response.cookies
 
         request.user = User(username='foo')
-        assert request.user.is_authenticated()
+        is_authenticated = request.user.is_authenticated
+        if callable(is_authenticated):
+            # Django < 1.10 had is_authenticated as method
+            is_authenticated = is_authenticated()
+        assert is_authenticated
         response = process_request(request, views.flag_in_view)
         self.assertEqual(b'on', response.content)
         assert 'dwf_myflag' not in response.cookies
@@ -194,7 +202,11 @@ class WaffleTests(TestCase):
         assert 'dwf_myflag' not in response.cookies
 
         request.user = User(username='foo')
-        assert request.user.is_authenticated()
+        is_authenticated = request.user.is_authenticated
+        if callable(is_authenticated):
+            # Django < 1.10 had is_authenticated as method
+            is_authenticated = is_authenticated()
+        assert is_authenticated
         response = process_request(request, views.flag_in_view)
         self.assertEqual(b'off', response.content)
         assert 'dwf_myflag' not in response.cookies
